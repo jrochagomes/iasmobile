@@ -17,11 +17,20 @@ public class HomePage extends PageBase {
         click(clearNotificationsBtn);
     }
 
-    public void clickNotification(String notification){
-        getNotification(notification);
+    public void getAndroidNotification(String notification){
+        androidNotifications();
+        specificAndroidNotification(notification);
     }
 
-    public void listNotifications(){
-        swipeNotifications();
+    public void getIOSNotification(String notification){
+        showIOSNotifications();
+        specificIOSNotification(notification);
+    }
+    public void showIOSNotifications(){
+        iOSNotifications(true);
+    }
+
+    public void hideIOSNotifications(){
+        iOSNotifications(false);
     }
 }

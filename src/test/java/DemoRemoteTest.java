@@ -7,14 +7,10 @@ public class DemoRemoteTest extends BrowserStackTest {
 
     @Test
     public void open_app() throws MalformedURLException, InterruptedException {
-        Android_setUp();
-        Enterprise_setUp();
-        homePage.listNotifications();
-        Thread.sleep(2000);
-        homePage.clickNotification("Appium");
-        Thread.sleep(5000);
-        homePage.clearAllNotifications();
-        System.out.println("Test steps complete");
+        iOS_setUp();
+        homePage.showIOSNotifications();
+        Thread.sleep(3000);
+        homePage.hideIOSNotifications();
         tearDown();
     }
 }

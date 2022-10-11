@@ -26,6 +26,16 @@ public class LocalTest {
         driver = new AppiumDriver(new URL("http://localhost:4777/wd/hub"), capsMobile);
         homePage = new HomePage(driver);
     }
+    public static void iOS_setUp() throws MalformedURLException {
+        DesiredCapabilities capsMobile = new DesiredCapabilities();
+        capsMobile.setCapability("platform", "iOS");
+        capsMobile.setCapability("automationName", "XCUITest");
+        capsMobile.setCapability("platformVersion", "14.4");
+        capsMobile.setCapability("deviceName", "iPhone 12");
+        capsMobile.setCapability("app", System.getProperty("user.dir") + "/resources/UIKitCatalog.app");
+        driver = new AppiumDriver(new URL("http://localhost:4777/wd/hub"), capsMobile);
+        homePage = new HomePage(driver);
+    }
 
     public static void Enterprise_setUp() throws MalformedURLException {
         DesiredCapabilities capsCalculator = new DesiredCapabilities();
@@ -39,7 +49,4 @@ public class LocalTest {
         }
     }
 
-/*    public static void iOS_setUp(){
-
-    }*/
 }
