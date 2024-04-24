@@ -3,9 +3,9 @@ on:
   workflow_call:
     inputs:
       BUILD_NUMBER:
-        type: string
         description: 'Build Number'
         required: true
+        type: string
         default: 'Android_Latest'
   workflow_dispatch:
     inputs:
@@ -21,4 +21,4 @@ jobs:
     steps:
       - name: Set Build Number
         id: set_build_number
-        run: echo ${{ BUILD_NUMBER }}
+        run: echo ${{ inputs.BUILD_NUMBER }}
