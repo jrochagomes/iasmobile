@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Set Build Number
         id: set_build_number
-        run: echo "BUILD_NUMBER=${{ inputs.BUILD_NUMBER }}" >> $GITHUB_OUTPUT
+        run: echo "BUILD_NUMBER=${{ inputs.BUILD_NUMBER }}" >> "$GITHUB_OUTPUT"
   call_ads_tests:
     needs: run-android-tests
     uses: ./.github/workflows/android_advertisements.yml
