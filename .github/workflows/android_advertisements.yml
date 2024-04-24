@@ -23,6 +23,7 @@ jobs:
         id: set_build_number
         run: echo ${{ inputs.BUILD_NUMBER }}
   call_compatibility_tests:
+    needs: run-android-tests
     uses: ./.github/workflows/android_compatibility.yml
     with:
       BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
