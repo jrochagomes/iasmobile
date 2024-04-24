@@ -19,5 +19,5 @@ jobs:
     needs: run-android-tests
     uses: ./.github/workflows/android_advertisements.yml
     with:
-      BUILD_NUMBER: echo ${{ jobs.run-android-tests.steps.set_build_number.outputs.BUILD_NUMBER }}
+      BUILD_NUMBER: echo ${{ steps.set_build_number.outputs.BUILD_NUMBER }}
           
