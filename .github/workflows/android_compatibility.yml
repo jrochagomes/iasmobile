@@ -1,0 +1,24 @@
+name: Mobile Android Compatibility Tests
+on:
+  workflow_call:
+    inputs:
+      BUILD_NUMBER:
+        description: 'Build Number'
+        required: true
+        type: string
+        default: 'Android_Latest'
+  workflow_dispatch:
+    inputs:
+      BUILD_NUMBER:
+        description: 'Build Number'
+        required: true
+        default: 'Android_Latest'
+
+jobs:
+  run-android-tests:
+    name: Teamsnap Android Compatibility Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Build Number
+        id: set_build_number
+        run: echo ${{ inputs.BUILD_NUMBER }}
