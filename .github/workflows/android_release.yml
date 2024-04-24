@@ -11,6 +11,8 @@ jobs:
   run-android-tests:
     name: Teamsnap Android Tests
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.set_build_number.outputs.BUILD_NUMBER }}
     steps:
       - name: Set Build Number
         id: set_build_number
@@ -19,5 +21,5 @@ jobs:
     needs: run-android-tests
     uses: ./.github/workflows/android_advertisements.yml
     with:
-      BUILD_NUMBER: echo ${{ steps.set_build_number.outputs.BUILD_NUMBER }}
+      BUILD_NUMBER: ${{ needs.run-android-tests.outputs.output1 }}
           
