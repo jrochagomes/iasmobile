@@ -1,0 +1,54 @@
+name: Check Jira Ticket Status Before Merge
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_jira_ticket:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get Jira ticket number
+      id: jira_ticket
+      run: |
+        # Extract the Jira ticket number from the PR title or body.
+        # Example: FUS-123
+        pr_title="${{ github.event.pull_request.title }}"
+        pr_body="${{ github.event.pull_request.body }}"
+        
+        # Regular expression to find something like TICKET-123
+        echo "pr_title: $pr_title"
+        ticket=$(echo "$pr_title" | grep -oE "[A-Za-z]+-[0-9]+" || echo "$pr_body" | grep -oE "[A-Za-z]+-[0-9]+")
+        echo "ticket=$ticket" >> $GITHUB_ENV
+
+    - name: Check Jira ticket status
+      id: jira_status
+      run: |
+        # Replace with Jira credentials/secrets (API Token, username, and Jira URL)
+        JIRA_URL="https://your-domain.atlassian.net"
+        JIRA_USER="your-email@example.com"
+        JIRA_TOKEN="your-api-token"
+        TICKET="${{ env.ticket }}"
+
+        # Jira API call to check the ticket status
+        status=$(curl -s -u $JIRA_USER:$JIRA_TOKEN \
+          -X GET \
+          -H "Accept: application/json" \
+          "$JIRA_URL/rest/api/2/issue/$TICKET" | jq -r '.fields.status.name')
+
+        echo "status=$status" >> $GITHUB_ENV
+
+    - name: Validate ticket status
+      run: |
+        # Check if the ticket status is 'Done'
+        if [[ "${{ env.status }}" != "Done" ]]; then
+          echo "The Jira ticket ${{ env.ticket }} is not in 'Done' status. Merge not allowed."
+          exit 1
+        else
+          echo "The Jira ticket ${{ env.ticket }} is in 'Done' status. Merge allowed."
+        fi
